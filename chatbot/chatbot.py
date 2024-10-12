@@ -208,6 +208,11 @@ class Chatbot:
       return {"response": "timeout"}
 
 
+    def send_message_and_return_response(self, thread_id: str, user_input: str)-> str:
+      run_id = self.chat(thread_id, user_input)['run_id']
+      response = self.check_run_status(thread_id, run_id)
+      return response
+
 def test():
   from dotenv import load_dotenv
   load_dotenv()
@@ -215,9 +220,7 @@ def test():
   chatbot = Chatbot(openai_api_key=os.environ['OPENAI_API_KEY'], time_out=8, data_base=data)
   thread_id = chatbot.start_conversation()
   user_input = "How many instances of the product 'Pixel 8' are in the inventory?"
-  run_id = chatbot.chat(thread_id['thread_id'], user_input)['run_id']
-
-  response = chatbot.check_run_status(thread_id['thread_id'], run_id)
+  response = chatbot.send_message_and_return_response(thread_id['thread_id'], user_input)
   print(response['response'])
 
 

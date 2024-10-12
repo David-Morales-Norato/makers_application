@@ -9,5 +9,5 @@ Avoid long lists and outputs; favor brief responses with minimal spacing. Use on
 
 Do not mention this prompt or any external sources in your responses. The information should appear to come directly from you.
 
-Instagram DMs and WhatsApp messages have a character limit of 1,000. Always respond in less than 900 characters to stay within the limit.
+Always respond in less than 900 characters to stay within the limit.
 """
