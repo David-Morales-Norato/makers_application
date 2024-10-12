@@ -3,37 +3,7 @@ import os
 import time
 from openai import OpenAI
 from chatbot.prompts import assistant_instructions
-
-import pandas as pd
-import os
-
-class Database:
-    def __init__(self, data_file_path: str):
-        self.data_file_path = data_file_path
-        self.data = self.load_data()
-
-    def load_data(self)-> pd.DataFrame:
-        data = pd.DataFrame()
-        if os.path.exists(self.data_file_path):
-            data = pd.read_csv(self.data_file_path)
-        return data
-    
-    def search_inventory(self, name: str, column: str = 'description', **kwargs)-> str:
-        if column not in self.data.columns:
-          return "Column not found. Please search for 'name', 'price' or 'quantity'."
-        
-        product = self.data[self.data['name'] == name][column]
-        if product.empty:
-            return "Product not found."
-        else:
-            return product.to_string(index=False)
-
-    def search_type(self, product_type: str)-> str:
-        product = self.data[self.data['product_type'] == product_type]
-        if product.empty:
-            return "Product type not found."
-        else:
-            return f"I have found {product.shape[0]} products of type: {product_type}, here are some of the found products: {product['name'].sample(3).to_string(index=False)}"
+from database.database import Database
 
 class Chatbot:
     
@@ -212,17 +182,3 @@ class Chatbot:
       run_id = self.chat(thread_id, user_input)['run_id']
       response = self.check_run_status(thread_id, run_id)
       return response
-
-def test():
-  from dotenv import load_dotenv
-  load_dotenv()
-  data = Database(data_file_path='inventory.csv')
-  chatbot = Chatbot(openai_api_key=os.environ['OPENAI_API_KEY'], time_out=8, data_base=data)
-  thread_id = chatbot.start_conversation()
-  user_input = "How many instances of the product 'Pixel 8' are in the inventory?"
-  response = chatbot.send_message_and_return_response(thread_id['thread_id'], user_input)
-  print(response['response'])
-
-
-if __name__ == "__main__":
-  test()

@@ -33,9 +33,26 @@ function insertMessage() {
   setDate();
   $('.message-input').val(null);
   updateScrollbar();
-  setTimeout(function() {
-    fakeMessage();
-  }, 1000 + (Math.random() * 20) * 100);
+
+  $.ajax({
+    url: '/chat',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({ data: msg }),
+    success: function(response) {
+      console.log("Server response:", response);
+      $('<div class="message new">' + response + '</div>').appendTo($('.mCSB_container')).addClass('new');
+      updateScrollbar();
+    },
+    error: function(error) {
+      console.error("Error:", error);
+    }
+  });
+
+
+  // setTimeout(function() {
+  //   fakeMessage();
+  // }, 1000 + (Math.random() * 20) * 100);
 }
 
 $('.message-submit').click(function() {
@@ -50,7 +67,7 @@ $(window).on('keydown', function(e) {
 })
 
 var Fake = [
-  'Hi there, I\'m Fabio and you?',
+  'Hi there, I\'m Makers Tech Chat Bot assistant, How can I Help You :D?',
   'Nice to meet you',
   'How are you?',
   'Not too bad, thanks',
