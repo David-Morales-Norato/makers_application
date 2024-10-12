@@ -2,7 +2,7 @@ import json
 import os
 import time
 from openai import OpenAI
-from prompts import assistant_instructions
+from chatbot.prompts import assistant_instructions
 
 import pandas as pd
 import os
@@ -208,9 +208,7 @@ class Chatbot:
       return {"response": "timeout"}
 
 
-if __name__ == "__main__":
-
-
+def test():
   from dotenv import load_dotenv
   load_dotenv()
   data = Database(data_file_path='inventory.csv')
@@ -221,3 +219,7 @@ if __name__ == "__main__":
 
   response = chatbot.check_run_status(thread_id['thread_id'], run_id)
   print(response['response'])
+
+
+if __name__ == "__main__":
+  test()
