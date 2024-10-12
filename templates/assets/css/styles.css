@@ -117,7 +117,7 @@ Mixins
     @include center;
     
     height: 80vh;
-    max-height: 500px;
+    
     z-index: 2;
     overflow: hidden;
     box-shadow: 0 5px 30px rgba(0, 0, 0, .2);
@@ -345,7 +345,7 @@ Mixins
       outline: none!important;
       transition: background .2s ease;
       
-      &:hover {
+      & :hover {
         background: #1D7745;
       }
     }
