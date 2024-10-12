@@ -1,0 +1,21 @@
+name,quantity,description,price,product_type
+Galaxy S23,50,Latest Samsung smartphone with AMOLED display and 5G,799,Cellphone
+iPhone 15,30,Apple's newest iPhone with A16 chip and improved camera,999,Cellphone
+Pixel 8,25,Google Pixel with advanced AI camera and stock Android,699,Cellphone
+MacBook Pro 14,15,Apple's high-end laptop with M1 Pro chip and 14-inch display,1999,Laptop
+Dell XPS 13,20,Compact and powerful Dell laptop with Intel i7 processor,1399,Laptop
+Apple Watch Series 9,40,Apple's newest smartwatch with health and fitness tracking,499,Smartwatch
+Galaxy Watch 6,35,Samsung smartwatch with ECG and sleep tracking features,349,Smartwatch
+Surface Pro 9,10,Microsoft 2-in-1 tablet with detachable keyboard and stylus support,1199,Laptop
+iPad Air 5,18,Apple's lightweight tablet with A14 chip and 10.9-inch display,599,Tablet
+Sony WH-1000XM5,60,Top-tier noise-cancelling headphones with superior sound quality,349,Headphones
+Lenovo Yoga 7i,12,Convertible Lenovo laptop with Intel i5 processor and touch display,1099,Laptop
+HP Spectre x360,22,HP's premium 2-in-1 laptop with 11th Gen Intel Core processor,1249,Laptop
+Garmin Venu 3,14,Garmin fitness watch with advanced health tracking features,299,Smartwatch
+OnePlus 12,28,OnePlus flagship phone with Snapdragon processor and fast charging,749,Cellphone
+Samsung Galaxy Tab S8,16,Samsung's latest Android tablet with S Pen and large display,849,Tablet
+Asus ROG Phone 6,11,Gaming phone with 144Hz display and Snapdragon chipset,1099,Cellphone
+Oculus Quest 3,30,Meta's latest VR headset with enhanced graphics and controllers,499,VR Headset
+Fitbit Charge 6,45,Fitbit's fitness tracker with built-in GPS and heart rate monitor,179,Smartwatch
+Microsoft Surface Laptop 5,17,Microsoft's lightweight laptop with touchscreen display,1349,Laptop
+Razer Blade 15,9,Razer's high-performance gaming laptop with NVIDIA graphics,2499,Laptop
