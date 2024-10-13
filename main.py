@@ -159,7 +159,11 @@ def login():
                 return redirect(url_for('dashboard'))
     return render_template('login.html', form=form)
 
-
+@app.route('/recomendacion', methods=['GET', 'POST'])
+@login_required
+def recomendacion():
+    "asdasd"
+    return "asdasd"
 #@app.route('/dashboard', methods=['GET', 'POST'])
 #@login_required
 #def dashboard():
