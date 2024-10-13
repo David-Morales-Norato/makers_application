@@ -12,13 +12,11 @@ Código CSS para o chatbot
 html,
 body {
   height: 100%;
+  border: none;
 }
 
-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+.container {
+  border: none;
 }
 
 body {
