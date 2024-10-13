@@ -13,6 +13,7 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
 
+import json
 
 app = Flask(__name__, template_folder='web', static_folder='web')
 
@@ -78,11 +79,9 @@ class LoginForm(FlaskForm):
 def index():
     return render_template('index.html')
 
-###
-#@app.route('/dashboard')
-#def dashboard():
-#    return render_template('dashboard.html')
-###
+@app.route('/dashboard', methods=['GET', 'POST'])
+def dashboard():
+    return render_template('dashboard.html', name = data.get_columns('name'), price = data.get_columns('price'), quantity = data.get_columns('quantity'), product_type = data.get_columns('product_type'))
 
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
@@ -132,6 +131,9 @@ def register():
         return redirect(url_for('login'))
 
     return render_template('register.html', form=form)
+
+
+
 
 
 if __name__ == '__main__':

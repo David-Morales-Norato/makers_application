@@ -28,3 +28,6 @@ class Database:
             return "Product type not found."
         else:
             return f"I have found {product.shape[0]} products of type: {product_type}, here are some of the found products: {product['name'].sample(3).to_string(index=False)}"
+
+    def get_columns(self, col)-> str:
+        return self.data[col].to_list()
