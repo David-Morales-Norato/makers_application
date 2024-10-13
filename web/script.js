@@ -1,10 +1,10 @@
 var $messages = $('.messages-content'),
-    d, h, m,
-    i = 0;
+  d, h, m,
+  i = 0;
 
-$(window).load(function() {
+$(window).load(function () {
   $messages.mCustomScrollbar();
-  setTimeout(function() {
+  setTimeout(function () {
     fakeMessage();
   }, 100);
 });
@@ -16,7 +16,7 @@ function updateScrollbar() {
   });
 }
 
-function setDate(){
+function setDate() {
   d = new Date()
   if (m != d.getMinutes()) {
     m = d.getMinutes();
@@ -39,12 +39,12 @@ function insertMessage() {
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({ data: msg }),
-    success: function(response) {
+    success: function (response) {
       console.log("Server response:", response);
       $('<div class="message new">' + response + '</div>').appendTo($('.mCSB_container')).addClass('new');
       updateScrollbar();
     },
-    error: function(error) {
+    error: function (error) {
       console.error("Error:", error);
     }
   });
@@ -55,11 +55,11 @@ function insertMessage() {
   // }, 1000 + (Math.random() * 20) * 100);
 }
 
-$('.message-submit').click(function() {
+$('.message-submit').click(function () {
   insertMessage();
 });
 
-$(window).on('keydown', function(e) {
+$(window).on('keydown', function (e) {
   if (e.which == 13) {
     insertMessage();
     return false;
@@ -88,12 +88,12 @@ function fakeMessage() {
   if ($('.message-input').val() != '') {
     return false;
   }
-  $('<div class="message loading new"><figure class="avatar"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure><span></span></div>').appendTo($('.mCSB_container'));
+  $('<div class="message loading new"><span></span></div>').appendTo($('.mCSB_container'));
   updateScrollbar();
 
-  setTimeout(function() {
+  setTimeout(function () {
     $('.message.loading').remove();
-    $('<div class="message new"><figure class="avatar"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/156381/profile/profile-80.jpg" /></figure>' + Fake[i] + '</div>').appendTo($('.mCSB_container')).addClass('new');
+    $('<div class="message new">' + Fake[i] + '</div>').appendTo($('.mCSB_container')).addClass('new');
     setDate();
     updateScrollbar();
     i++;
