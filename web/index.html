@@ -37,17 +37,7 @@
       </nav>
       {% endif %}
 
-
-
     </header>
-
-    <!---<aside class="sidebar">
-      <button id="chatBtn">Chat</button>
-      <button id="dashboardBtn">Dashboard</button>
-    </aside>-->
-
-
-
     <main>
       <div class="chat">
         <div class="chat-title">
@@ -57,7 +47,9 @@
           <div class="messages-content"></div>
         </div>
         <div class="message-box">
-          <textarea type="text" class="message-input" placeholder="Type message..."></textarea>
+          <div class="message-input-container">
+            <textarea type="text" class="message-input" placeholder="Type message..."></textarea>
+          </div>
           <button type="submit" class="message-submit">Send</button>
         </div>
     </main>
@@ -73,7 +65,6 @@
   <script src="{{ url_for('static', filename='script.js') }}"></script>
 
   </div>
-
 </body>
 
 </html>

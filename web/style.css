@@ -65,9 +65,8 @@ main{
 }
 
 
-/*--------------------
-Chat
---------------------*/
+/*Chat*/
+
 .chat {
   position: absolute;
   flex-grow: 1;
@@ -243,36 +242,41 @@ Messages
           animation-delay: 0.3s;
 }
 
-/*--------------------
-Message Box
---------------------*/
 .message-box {
-  flex: 0 1 40px;
+  flex: 0 0 auto;
   width: 100%;
   background: rgba(0, 0, 0, 0.3);
   padding: 10px;
   position: relative;
+  display: flex;
+  align-items: center;
 }
+
+.message-input-container {
+  flex-grow: 1;
+  height: 40px; 
+  overflow-y: auto;
+  margin-right: 60px;
+}
+
 .message-box .message-input {
+  width: 100%;
+  height: 100%;
   background: none;
   border: none;
   outline: none !important;
   resize: none;
   color: rgba(255, 255, 255, 0.7);
   font-size: 15px;
-  height: 17px;
+  padding: 0;
   margin: 0;
-  padding-right: 20px;
-  width: 265px;
 }
-.message-box textarea:focus:-webkit-placeholder {
-  color: transparent;
-}
+
 .message-box .message-submit {
   position: absolute;
-  z-index: 1;
-  top: 9px;
   right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
   color: #fff;
   border: none;
   background: #248A52;
@@ -283,9 +287,28 @@ Message Box
   border-radius: 10px;
   outline: none !important;
   transition: background 0.2s ease;
+  cursor: pointer;
 }
+
 .message-box .message-submit:hover {
   background: #1D7745;
+}
+
+.message-box .message-submit:active {
+  background: #1A6B3E;
+}
+
+.message-input-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.message-input-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.message-input-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
 }
 
 /*--------------------
