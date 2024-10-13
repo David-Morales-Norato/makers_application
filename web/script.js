@@ -33,13 +33,15 @@ function insertMessage() {
   setDate();
   $('.message-input').val(null);
   updateScrollbar();
-
+  $('<div class="message loading new"><span></span></div>').appendTo($('.mCSB_container'));
+  updateScrollbar();
   $.ajax({
     url: '/chat',
     type: 'POST',
     contentType: 'application/json',
     data: JSON.stringify({ data: msg }),
     success: function (response) {
+      $('.message.loading').remove();
       console.log("Server response:", response);
       $('<div class="message new">' + response + '</div>').appendTo($('.mCSB_container')).addClass('new');
       updateScrollbar();
@@ -48,6 +50,7 @@ function insertMessage() {
       console.error("Error:", error);
     }
   });
+  
 
 
   // setTimeout(function() {
