@@ -1,10 +1,3 @@
-from chatbot.chatbot import Chatbot
-from database.database import Database
-from flask import Flask, render_template, request
-import os
-from dotenv import load_dotenv
-import time
-
 from flask import Flask, render_template, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -13,30 +6,21 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
 
-
-app = Flask(__name__, template_folder='web', static_folder='web')
-
+app = Flask(__name__)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SECRET_KEY'] = 'thisisasecretkey'
 
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
-load_dotenv()
-data = Database(data_file_path='inventory.csv')
-
-try:
-    chatbot = Chatbot(openai_api_key=os.environ['OPENAI_API_KEY'], time_out=10, data_base=data)
-    thread_id = chatbot.start_conversation()
-except Exception as e:
-    print("Error: ", e)
 
 
 class User(db.Model, UserMixin):
@@ -72,28 +56,10 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 
-
-
 @app.route('/')
-def index():
-    return render_template('index.html')
+def home():
+    return render_template('home.html')
 
-###
-#@app.route('/dashboard')
-#def dashboard():
-#    return render_template('dashboard.html')
-###
-
-@app.route('/chat', methods=['GET', 'POST'])
-def chat():
-    data = request.json['data']
-    #user_input = "How many instances of the product 'Pixel 8' are in the inventory?"
-    response = chatbot.send_message_and_return_response(thread_id['thread_id'], data)
-    #print(response['response'])
-    print("Received message for thread ID:", thread_id['thread_id'], "Message:", data, "Response:", response['response'])
-    #time.sleep(5)
-
-    return response['response']
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -134,8 +100,5 @@ def register():
     return render_template('register.html', form=form)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
-
-# if __name__ == "__main__":
-#     test()
