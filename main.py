@@ -80,6 +80,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/dashboard', methods=['GET', 'POST'])
+@login_required
 def dashboard():
     return render_template('dashboard.html', name = data.get_columns('name'), price = data.get_columns('price'), quantity = data.get_columns('quantity'), product_type = data.get_columns('product_type'))
 
@@ -106,10 +107,10 @@ def login():
     return render_template('login.html', form=form)
 
 
-@app.route('/dashboard', methods=['GET', 'POST'])
-@login_required
-def dashboard():
-    return render_template('dashboard.html')
+#@app.route('/dashboard', methods=['GET', 'POST'])
+#@login_required
+#def dashboard():
+#    return render_template('dashboard.html')
 
 
 @app.route('/logout', methods=['GET', 'POST'])
