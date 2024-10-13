@@ -48,6 +48,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
     recommendations = db.Column(db.String(80), nullable=False, default='')
+    user_type = db.Column(db.Boolean, default=False)
 
 class RegisterForm(FlaskForm):
     username = StringField(validators=[
@@ -85,6 +86,8 @@ def index():
         chatbot.register_user(thread_id['thread_id'], user_name=current_user.username, like = current_user.recommendations)
     return render_template('index.html')
 
+
+""""
 @app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
@@ -135,6 +138,56 @@ def dashboard():
         name = data.get_columns('name'),
         quantity = data.get_columns('quantity'),
     )
+"""
+@app.route('/dashboard', methods=['GET', 'POST'])
+@login_required
+def dashboard():
+    if not current_user.user_type:
+        return redirect(url_for('index'))  # Redirect non-admins back to the home page
+    
+    # Dashboard logic for admins
+    df = data_sales.data  # Sample data processing code
+    df['date_of_sale'] = pd.to_datetime(df['date_of_sale'])
+    df['month'] = df['date_of_sale'].dt.to_period('M')
+    monthly_sales = df.groupby('month')['price'].sum().reset_index()
+    sales_dates = monthly_sales['month'].astype(str).tolist()
+    sales_amounts = monthly_sales['price'].tolist()
+
+    top_products = df.groupby('product')['price'].sum().reset_index()
+    top_products = top_products.sort_values(by='price', ascending=False).head(5)
+    top_product_names = top_products['product'].tolist()
+    top_product_quantities = top_products['price'].tolist()
+
+    category_sales = df.groupby('product_type')['price'].sum().reset_index()
+    category_sales = category_sales.sort_values(by='price', ascending=False)
+    category_names = category_sales['product_type'].tolist()
+    category_sales = category_sales['price'].tolist()
+
+    return render_template(
+        'dashboard.html',
+        sales_dates=sales_dates,
+        sales_amounts=sales_amounts,
+        top_product_names=top_product_names,
+        top_product_quantities=top_product_quantities,
+        category_names=category_names,
+        category_sales=category_sales,
+        name=data.get_columns('name'),
+        quantity=data.get_columns('quantity'),
+    )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @app.route('/chat', methods=['GET', 'POST'])
 @login_required

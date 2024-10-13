@@ -20,14 +20,23 @@
       <h1>Makers Tech</h1>
 
 
+      {% if current_user.user_type %}
       <nav>
         <ul>
           <li><a href="/">Chat</a></li>
           <li><a href="/dashboard">Dashboard</a></li>
-          <li><a href="{{url_for('logout')}}">Logout</a></li>
-          </li>
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
         </ul>
       </nav>
+      {% else %}
+      <nav>
+        <ul>
+          <li><a href="/">Chat</a></li>
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+      </nav>
+      {% endif %}
+
 
 
     </header>
