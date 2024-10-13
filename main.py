@@ -75,7 +75,8 @@ class LoginForm(FlaskForm):
 
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
+@login_required
 def index():
     return render_template('index.html')
 
@@ -85,6 +86,7 @@ def dashboard():
     return render_template('dashboard.html', name = data.get_columns('name'), price = data.get_columns('price'), quantity = data.get_columns('quantity'), product_type = data.get_columns('product_type'))
 
 @app.route('/chat', methods=['GET', 'POST'])
+@login_required
 def chat():
     data = request.json['data']
     #user_input = "How many instances of the product 'Pixel 8' are in the inventory?"
