@@ -26,6 +26,9 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -40,12 +43,11 @@ try:
 except Exception as e:
     print("Error: ", e)
 
-
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
-
+    recommendations = db.Column(db.String(80), nullable=False, default='')
 
 class RegisterForm(FlaskForm):
     username = StringField(validators=[
@@ -74,11 +76,13 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 
-
+FIRST_TIME = True
 
 @app.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
+    if FIRST_TIME:
+        chatbot.register_user(thread_id['thread_id'], user_name=current_user.username, like = current_user.recommendations)
     return render_template('index.html')
 
 @app.route('/dashboard', methods=['GET', 'POST'])

@@ -102,12 +102,13 @@ class Chatbot:
       print("New conversation started with thread ID:", thread.id)
       return {"thread_id": thread.id}
 
-    def chat(self, thread_id: str, user_input: str)-> str:
+    def chat(self, thread_id: str, user_input: str, verbose: bool = True)-> str:
 
       if not thread_id:
         print("Error: Missing thread_id in /chat")
         return {"error": "Missing thread_id"}, 40
-      print("Received message for thread ID:", thread_id, "Message:", user_input)
+      if verbose:
+        print("Received message for thread ID:", thread_id, "Message:", user_input)
 
       if user_input == "":
         return None
@@ -117,7 +118,8 @@ class Chatbot:
                                           content=user_input)
       run = self.client.beta.threads.runs.create(thread_id=thread_id,
                                             assistant_id=self.assistant_id)
-      print("Run started with ID:", run.id)
+      if verbose:
+        print("Run started with ID:", run.id)
       return {"run_id": run.id}
     
     def check_run_status(self, thread_id: str, run_id: str)-> str:
@@ -176,9 +178,14 @@ class Chatbot:
 
       print("Run timed out")
       return {"response": "timeout"}
+    
+    def register_user(self,thread_id: str, user_name: str, like: str)-> str:
+      txt = f" You are going to answer questions from {user_name} who likes {like} reply with a one word comment saying -acknowledged- if you have received this information."
 
+      user = self.send_message_and_return_response(thread_id, txt)
+      return user
 
-    def send_message_and_return_response(self, thread_id: str, user_input: str)-> str:
-      run_id = self.chat(thread_id, user_input)['run_id']
+    def send_message_and_return_response(self, thread_id: str, user_input: str, verbose: bool = False)-> str:
+      run_id = self.chat(thread_id, user_input, verbose = verbose)['run_id']
       response = self.check_run_status(thread_id, run_id)
       return response
