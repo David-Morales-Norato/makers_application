@@ -570,7 +570,9 @@ main {
     margin: 20px;
 }
 
-
+ul {
+  padding-left: 10px;
+}
 body {
   font-family: 'Open Sans', sans-serif;
   background-color: #f4f4f4;

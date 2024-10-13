@@ -11,14 +11,23 @@ $(window).load(function () {
   $('<div class="message loading new"><span></span></div>').appendTo($('.mCSB_container'));
   updateScrollbar();
       
+
+  msg = "What product would you recommend me to Buy?. Answer to me with the * Highly Recommended: , * Recommended: , and * Not Recommended: . Show the list recommendations in a coherent text format with indentation and line breaks"
   $.ajax({
     url: '/chat',
     type: 'POST',
     contentType: 'application/json',
-    data: JSON.stringify({ data: "What product would you recommend me to Buy?. Answer with 'While you think, I recommend to you :' and list the  **Highly Recommended**, **Recommended**, and **Not Recommended** for the user. Create a coherent text" }),   
+    data: JSON.stringify({ data: msg }),   
     success: function (response) {
       $('.message.loading').remove();
-      console.log("Server response:", response);
+      console.log("Server response:", response);3
+
+      response = "<ul> " + response + " </li></ul>";
+
+      response = response.replace(/\*/g, '</li><li>');
+
+      response = response.replace('</li>', '');
+      response = "While you think, I recommend to you: " + response;
       $('<div class="message new">' + response + '</div>').appendTo($('.mCSB_container')).addClass('new');
       updateScrollbar();
     },
