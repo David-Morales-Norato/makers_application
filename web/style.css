@@ -586,3 +586,59 @@ nav a:hover {
 		width: 100%;
 	}
 }
+
+
+.chart-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    grid-gap: 20px;
+    padding: 20px;
+}
+
+.chart-item {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.chart-item canvas {
+    width: 100% !important;
+    height: auto !important;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+}
+
+.header {
+    background-color: #2c3e50;
+    padding: 10px 20px;
+    color: #fff;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+nav ul li {
+    margin-right: 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+main {
+    margin: 20px;
+}

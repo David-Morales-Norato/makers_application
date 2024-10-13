@@ -4,6 +4,7 @@ from flask import Flask, render_template, request
 import os
 from dotenv import load_dotenv
 import time
+import json
 
 app = Flask(__name__, template_folder='web', static_folder='web')
 
@@ -11,11 +12,11 @@ app = Flask(__name__, template_folder='web', static_folder='web')
 load_dotenv()
 data = Database(data_file_path='inventory.csv')
 
-try:
-    chatbot = Chatbot(openai_api_key=os.environ['OPENAI_API_KEY'], time_out=10, data_base=data)
-    thread_id = chatbot.start_conversation()
-except Exception as e:
-    print("Error: ", e)
+# try:
+#     chatbot = Chatbot(openai_api_key=os.environ['OPENAI_API_KEY'], time_out=10, data_base=data)
+#     thread_id = chatbot.start_conversation()
+# except Exception as e:
+#     print("Error: ", e)
 
 
 
@@ -27,9 +28,9 @@ except Exception as e:
 def index():
     return render_template('index.html')
 
-@app.route('/dashboard')
+@app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
-    return render_template('dashboard.html')
+    return render_template('dashboard.html', name = data.get_columns('name'), price = data.get_columns('price'), quantity = data.get_columns('quantity'), product_type = data.get_columns('product_type'))
 
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
@@ -41,6 +42,9 @@ def chat():
     #time.sleep(5)
 
     return response['response']
+
+
+
 
 
 if __name__ == '__main__':
