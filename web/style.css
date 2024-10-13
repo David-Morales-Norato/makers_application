@@ -1,5 +1,5 @@
 /* 
-Código CSS para o chatbot
+CSS for the chat application, log in, and sign up pages 
 */
 
 * {
@@ -33,9 +33,6 @@ body {
   overflow: hidden;
 }
 
-
-
-/* Estilo para la cabecera */
 .header {
   background-color: #1c2b50;
   
@@ -56,27 +53,7 @@ main{
     padding-bottom:2.5% ;
     
   }
-/*
-  height: 80vh;
-  
-  
-  overflow: hidden;
-  box-shadow: 0 5px 30px rgba(0, 0, 0, .2);
-  background: rgba(0, 0, 0, .5);
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  padding: 20px;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  margin-left: 150px;
-*/
 
-
-
-/* Estilo para el área de contenido */
 .main-content {
   flex-grow: 1;
   padding: 20px;
@@ -430,8 +407,6 @@ Bounce
   }
 }
 
-
-/*Return to background-color: #68cbd1;*/
 nav,
 header {
 	background-color: #2c3e50;
@@ -454,7 +429,7 @@ nav ul {
 
 nav li {
   height: 50px;
-  margin: 0 20px; /* Añadir margen horizontal para separar los elementos */
+  margin: 0 20px; 
 }
 
 nav a {
@@ -483,7 +458,7 @@ nav a:hover {
 	width: 250px;
 	z-index: 999;
 	background-color: rgba(255, 251, 224, 0.2);
-	backdrop-filter: blur(10px); /*10px*/
+	backdrop-filter: blur(10px); 
 	box-shadow: -10px 0 10px rgba(0, 0, 0, 0.23);
 	display: none;
 	flex-direction: column;
@@ -515,7 +490,7 @@ nav a:hover {
 
 .chart-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    grid-template-columns: repeat(2, 1fr); 
     grid-gap: 20px;
     padding: 20px;
 }
@@ -575,7 +550,6 @@ body {
   font-family: 'Open Sans', sans-serif;
   background-color: #f4f4f4;
   margin: 0;
-  /* Ensure the body takes up the full height */
   height: 100vh;
   overflow: hidden;
 }
@@ -593,15 +567,13 @@ body {
   flex: 0 0 auto;
 }
 
-/* Scrollable main content */
+
 .content-wrapper {
   flex: 1 1 auto;
   overflow-y: auto;
 }
 
-
 /* Styles for main.form*/
-
 .form {
   border-radius: 2%;
   display: flex;
@@ -644,6 +616,3 @@ body {
   text-decoration: none;
   font-size: 15px; 
 }
-
-
-
