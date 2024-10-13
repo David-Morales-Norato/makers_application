@@ -15,8 +15,7 @@ class Database:
     def search_inventory(self, name: str, column: str = 'description', **kwargs)-> str:
         if column not in self.data.columns:
             return "Column not found. Please search for 'name', 'price' or 'quantity'."
-        
-        product = self.data[self.data['name'] == name][column]
+        product = self.data[self.data['name'].str.lower().str.replace(" ", "") == name.replace(" ", "").lower()][column]
         if product.empty:
             return "Product not found."
         else:

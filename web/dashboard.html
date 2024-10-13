@@ -52,31 +52,37 @@
         </header>
 
         <!-- Main Content -->
+        <!-- Scrollable Content Wrapper -->
         <div class="content-wrapper">
+            <!-- Main Content -->
             <main class="main-content">
                 <div class="chart-container">
-                    <!-- Chart 1 -->
+                    <!-- Chart 1: Total Sales Over Time -->
                     <div class="chart-item">
-                        <canvas id="myChart"></canvas>
+                        <h3>Total Sales Over Time</h3>
+                        <canvas id="salesOverTimeChart"></canvas>
                     </div>
-                    <!-- Chart 2 -->
+                    <!-- Chart 2: Top Selling Products -->
                     <div class="chart-item">
-                        <canvas id="myChart2"></canvas>
+                        <h3>Top Selling Products</h3>
+                        <canvas id="topProductsChart"></canvas>
                     </div>
-                    <!-- Chart 3 -->
+                    <!-- Chart 3: Sales by Category -->
                     <div class="chart-item">
-                        <canvas id="myChart3"></canvas>
+                        <h3>Sales by Category</h3>
+                        <canvas id="salesByCategoryChart"></canvas>
                     </div>
-                    <!-- Chart 4 -->
+                    <!-- Chart 4: Conversion Rate Over Time -->
                     <div class="chart-item">
-                        <canvas id="myChart4"></canvas>
+                        <h3>Quantity of Products in Inventory</h3>
+                        <canvas id="conversionRateChart"></canvas>
                     </div>
                 </div>
             </main>
         </div>
     </div>
 
-    <!-- External JS Libraries -->
+    
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <script
         src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.3/jquery.mCustomScrollbar.concat.min.js'>
@@ -89,19 +95,129 @@
 
     <!-- Chart Scripts -->
     <script>
-        // Convert Python lists to JSON for use in JavaScript
-        const name = {{ name | tojson }};
-        const quantity = {{ quantity | tojson }};
 
-        // Chart 1 - Bar Chart using dynamic data
-        const ctx1 = document.getElementById('myChart').getContext('2d');
+
+        // Data passed from Flask backend (replace with your data)
+        const salesDates = {{ sales_dates | tojson }};
+        const salesAmounts = {{ sales_amounts | tojson }};
+        const topProductNames = {{ top_product_names | tojson }};
+        const topProductQuantities = {{ top_product_quantities | tojson }};
+        const categoryNames = {{ category_names | tojson }};
+        const categorySales = {{ category_sales | tojson }};
+
+        // Chart 1: Total Sales Over Time
+        const ctx1 = document.getElementById('salesOverTimeChart').getContext('2d');
         new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: salesDates,
+                datasets: [{
+                    label: 'Total Sales',
+                    data: salesAmounts,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    tension: 0.1,
+                    fill: true,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Revenue ($)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Chart 2: Top Selling Products
+        const ctx2 = document.getElementById('topProductsChart').getContext('2d');
+        new Chart(ctx2, {
             type: 'bar',
             data: {
-                labels: name,
+                labels: topProductNames,
+                datasets: [{
+                    label: 'Units Sold',
+                    data: topProductQuantities,
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Units Sold'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Chart 3: Sales by Category
+        const ctx3 = document.getElementById('salesByCategoryChart').getContext('2d');
+        new Chart(ctx3, {
+            type: 'pie',
+            data: {
+                labels: categoryNames,
+                datasets: [{
+                    label: 'Sales by Category',
+                    data: categorySales,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)'
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                }
+            }
+        });
+
+
+        const name_data = {{ name | tojson }};
+        const quantity_data = {{ quantity | tojson }};
+
+        
+        // Chart 1 - Bar Chart using dynamic data
+        const ctx1_inventory = document.getElementById('conversionRateChart').getContext('2d');
+        new Chart(ctx1_inventory, {
+            type: 'bar',
+            data: {
+                labels: name_data,
                 datasets: [{
                     label: 'quantity',
-                    data: quantity,
+                    data: quantity_data,
                     backgroundColor: 'rgba(54, 162, 235, 0.5)',
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1
@@ -120,80 +236,80 @@
             }
         });
 
-        // Chart 2 - Line Chart (Example Data)
-        const ctx2 = document.getElementById('myChart2').getContext('2d');
-        new Chart(ctx2, {
-            type: 'line',
-            data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-                datasets: [{
-                    label: 'Sales',
-                    data: [65, 59, 80, 81, 56, 55],
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 2,
-                    tension: 0.1,
-                    fill: false
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { position: 'top' },
-                }
-            }
-        });
+        // // Chart 2 - Line Chart (Example Data)
+        // const ctx2 = document.getElementById('myChart2').getContext('2d');
+        // new Chart(ctx2, {
+        //     type: 'line',
+        //     data: {
+        //         labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+        //         datasets: [{
+        //             label: 'Sales',
+        //             data: [65, 59, 80, 81, 56, 55],
+        //             borderColor: 'rgba(75, 192, 192, 1)',
+        //             borderWidth: 2,
+        //             tension: 0.1,
+        //             fill: false
+        //         }]
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         plugins: {
+        //             legend: { position: 'top' },
+        //         }
+        //     }
+        // });
 
-        // Chart 3 - Pie Chart (Example Data)
-        const ctx3 = document.getElementById('myChart3').getContext('2d');
-        new Chart(ctx3, {
-            type: 'pie',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow'],
-                datasets: [{
-                    label: 'Population',
-                    data: [300, 50, 100],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.6)',
-                        'rgba(54, 162, 235, 0.6)',
-                        'rgba(255, 206, 86, 0.6)'
-                    ],
-                    borderColor: '#fff',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { position: 'top' },
-                }
-            }
-        });
+        // // Chart 3 - Pie Chart (Example Data)
+        // const ctx3 = document.getElementById('myChart3').getContext('2d');
+        // new Chart(ctx3, {
+        //     type: 'pie',
+        //     data: {
+        //         labels: ['Red', 'Blue', 'Yellow'],
+        //         datasets: [{
+        //             label: 'Population',
+        //             data: [300, 50, 100],
+        //             backgroundColor: [
+        //                 'rgba(255, 99, 132, 0.6)',
+        //                 'rgba(54, 162, 235, 0.6)',
+        //                 'rgba(255, 206, 86, 0.6)'
+        //             ],
+        //             borderColor: '#fff',
+        //             borderWidth: 2
+        //         }]
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         plugins: {
+        //             legend: { position: 'top' },
+        //         }
+        //     }
+        // });
 
-        // Chart 4 - Radar Chart (Example Data)
-        const ctx4 = document.getElementById('myChart4').getContext('2d');
-        new Chart(ctx4, {
-            type: 'radar',
-            data: {
-                labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
-                datasets: [{
-                    label: 'My First Dataset',
-                    data: [65, 59, 90, 81, 56, 55, 40],
-                    fill: true,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgb(255, 99, 132)',
-                    pointBackgroundColor: 'rgb(255, 99, 132)',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgb(255, 99, 132)'
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { position: 'top' },
-                }
-            }
-        });
+        // // Chart 4 - Radar Chart (Example Data)
+        // const ctx4 = document.getElementById('myChart4').getContext('2d');
+        // new Chart(ctx4, {
+        //     type: 'radar',
+        //     data: {
+        //         labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
+        //         datasets: [{
+        //             label: 'My First Dataset',
+        //             data: [65, 59, 90, 81, 56, 55, 40],
+        //             fill: true,
+        //             backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        //             borderColor: 'rgb(255, 99, 132)',
+        //             pointBackgroundColor: 'rgb(255, 99, 132)',
+        //             pointBorderColor: '#fff',
+        //             pointHoverBackgroundColor: '#fff',
+        //             pointHoverBorderColor: 'rgb(255, 99, 132)'
+        //         }]
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         plugins: {
+        //             legend: { position: 'top' },
+        //         }
+        //     }
+        // });
     </script>
 </body>
 
