@@ -12,11 +12,11 @@ app = Flask(__name__, template_folder='web', static_folder='web')
 load_dotenv()
 data = Database(data_file_path='inventory.csv')
 
-# try:
-#     chatbot = Chatbot(openai_api_key=os.environ['OPENAI_API_KEY'], time_out=10, data_base=data)
-#     thread_id = chatbot.start_conversation()
-# except Exception as e:
-#     print("Error: ", e)
+try:
+    chatbot = Chatbot(openai_api_key=os.environ['OPENAI_API_KEY'], time_out=10, data_base=data)
+    thread_id = chatbot.start_conversation()
+except Exception as e:
+    print("Error: ", e)
 
 
 
